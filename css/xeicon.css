@@ -10,7 +10,11 @@
   font-style: normal;
   font-weight: normal;
   src: url("./xeicon/xeicon.eot?3ka2yj");
-  src: url("./xeicon/xeicon.eot?3ka2yj#iefix") format("embedded-opentype"), url("./xeicon/xeicon.woff2?3ka2yj") format("woff2"), url("./xeicon/xeicon.ttf?3ka2yj") format("truetype"), url("./xeicon/xeicon.woff?3ka2yj") format("woff"), url("./xeicon/xeicon.svg?3ka2yj#xeicon") format("svg");
+  src: url("./xeicon/xeicon.eot?3ka2yj#iefix") format("embedded-opentype"), 
+  url("./xeicon/xeicon.woff2?3ka2yj") format("woff2"), 
+  url("./xeicon/xeicon.ttf?3ka2yj") format("truetype"), 
+  url("./xeicon/xeicon.woff?3ka2yj") format("woff"), 
+  url("./xeicon/xeicon.svg?3ka2yj#xeicon") format("svg");
 }
 [class^="xi-"],
 [class*=" xi-"] {
