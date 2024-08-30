@@ -92,7 +92,7 @@ $(document).ready(function () {
     fadeEffect: {
       crossFade: true,
     },
-    // loopedSlides: 3,
+    loopedSlides: 3,
   });
   const sw_navi = new Swiper(".sw-navi", {
     loop: true,
@@ -125,11 +125,19 @@ $(document).ready(function () {
     },
   });
   $(".sw-notice-pause").click(function () {
-    sw_notice.autoplay.stop();
+    // swiper 가 중첩되어져서 처리를 함.
+    for (var i = 0; i < sw_notice.length; i++) {
+      sw_notice[i].autoplay.stop();
+    }
+    // sw_notice.autoplay.stop();
   });
   // 자동 재생 실행
   $(".sw-notice-play").click(function () {
-    sw_notice.autoplay.start();
+    // swiper 가 중첩되어져서 처리를 함.
+    for (var i = 0; i < sw_notice.length; i++) {
+      sw_notice[i].autoplay.start();
+    }
+    // sw_notice.autoplay.start();
   });
   // 공지사항 목록 관련
   const noticeA = $(".notice-menu > li");
@@ -138,21 +146,118 @@ $(document).ready(function () {
     $(this)
       .find("a")
       .click(function (e) {
-        e.preventDefault(); //href 방지
-        // 포커스 적용 - 탭내용을 보여준다.
+        e.preventDefault(); // href방지
+        // 포커스 적용  - 탭내용을 보여준다.
         showNotice(index);
       });
   });
   // 내용 모음
   const noticeLi = $(".notice-cont > li");
-  // notice 내용을 보여주는 함수
-  // 내용을 보여주고 포커스를 이동하는
-  // 사용자 지정함수 : showNotice(index)
+  // notice내용을 보여주는 함수
+  // 내용을 보여주고, 포커스를 이동하는
+  // 사용자 지정 함수 : showNotice(인덱스)
   function showNotice(_index) {
+    // console.log(_index);
     noticeA.removeClass("notice-menu-focus");
     noticeA.eq(_index).addClass("notice-menu-focus");
     noticeLi.hide();
     noticeLi.eq(_index).show();
   }
+  // sw-edu swiper
+  const sw_edu = new Swiper(".sw-edu", {
+    autoplay: {
+      delay: 2000,
+      // 사용자가 터치드래그 하고 난 후 자동 실행
+      disableOnInteraction: false,
+    },
+    loop: true,
+    nested: true,
+    navigation: {
+      nextEl: ".sw-edu-next",
+      prevEl: ".sw-edu-prev",
+    },
+    pagination: {
+      el: ".sw-edu-pg",
+      type: "fraction",
+    },
+  });
+  // 알림 탭메뉴
+  const alramA = $(".alram-tab-menu a");
+  const alramCont = $(".alram-tab-cont");
+  $.each(alramA, function (index, ietm) {
+    $(this).click(function (e) {
+      e.preventDefault();
+      alramCont.removeClass("alram-tab-cont-focus");
+      alramCont.eq(index).addClass("alram-tab-cont-focus");
+      alramA.removeClass("alram-tab-menu-focus");
+      alramA.eq(index).addClass("alram-tab-menu-focus");
+    });
+  });
+  // hub메뉴기능
+  const hubMenus = $(".hub-menu a");
+  const hubInfos = $(".hub-info > li");
+  $.each(hubMenus, function (index, item) {
+    // console.log(this);
+    $(this).mouseenter(function () {
+      hubInfos.removeClass("hub-info-focus");
+      hubInfos.eq(index).addClass("hub-info-focus");
+    });
+  });
+  // sns기능
+  const snsCate = $(".sns-cate li a");
+  const snsCont = $(".sns-cont");
+  snsCont.eq(0).show();
+  $.each(snsCate, function (index, item) {
+    $(this).click(function (e) {
+      e.preventDefault();
+      // 5번째 버튼은 임시로 처리한다.
+      if (index == 4) {
+        return;
+      }
+      snsCate.removeAttr("class");
+      snsCate.eq(3).addClass("i-naver");
+      snsCont.hide();
+      if (index == 0) {
+        $(this).addClass("icon-focus-fb");
+        snsCont.eq(0).show();
+      } else if (index == 1) {
+        $(this).addClass("icon-focus-is");
+        snsCont.eq(1).show();
+      } else if (index == 2) {
+        $(this).addClass("icon-focus-yt");
+        snsCont.eq(2).show();
+      } else if (index == 3) {
+        $(this).addClass("icon-focus-nv");
+        snsCont.eq(3).show();
+      }
+    });
+  });
+
+  // news-room
+  const newsCate = $(".news-cate li a");
+  let newsFocusNum = 0;
+  const newsCont = $(".news-cont");
+  newsCont.eq(newsFocusNum).show();
+  $.each(newsCate, function (index, item) {
+    $(this).click(function (e) {
+      e.preventDefault();
+      // 일단 모두 제거한다
+      newsCate.removeClass("news-focus")
+      newsCate.eq(index).addClass("news-focus")
+      newsCont.hide()
+      newsFocusNum = index
+      newsCont.eq(index).show()
+      newsCont.eq(newsFocusNum).show()
+    });
+    $(this).mouseenter(function(){
+      $(this).addClass("news-focus")
+    })
+    $(this).mouseleave(function(){
+      if(newsFocusNum == index){
+        return
+      }
+      $(this).removeClass("news-focus")
+    })
+  });
   // ====================================
 });
